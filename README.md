@@ -125,6 +125,7 @@ Key questions addressed:
 *(Include these as images or link to Tableau dashboard)*
 
 * Histogram of delivery durations with on-time thresholds (15, 20, 30 mins)
+![Image 1](Graphs/output.png)
 * Line plots of on-time rates by hour and order size
 * Market comparison charts for high-latency cuisines
 * Interactive Tableau dashboard linking market performance, order volume, and lateness trends
