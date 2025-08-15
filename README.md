@@ -125,17 +125,29 @@ Key questions addressed:
 *(Include these as images or link to Tableau dashboard)*
 
 * Histogram of delivery durations with on-time thresholds (15, 20, 30 mins)
+  
 ![Image 1](Graphs/output.png)
+
 * “Market-Level On-Time Delivery Performance”
+  
 ![Image 2](Graphs/output1.png)
+
 * On-Time Delivery Performance by Cuisine Type
+  
 ![Image 3](Graphs/output3.png)
+
 * Hourly Trends in Delivery Timeliness
+  
 ![Image 4](Graphs/output4.png)
+
 * Impact of Busyness on Delivery Performance
+  
 ![Image 5](Graphs/output5.png)
+
 * Delivery Performance by Order Size
+  
 ![Image 6](Graphs/output6.png)
+
 * On-Time rate by Order to Dasher Ratio
 ![Image 7](Graphs/output7.png)
 ---
