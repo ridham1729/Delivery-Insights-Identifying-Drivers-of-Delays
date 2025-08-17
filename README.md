@@ -111,45 +111,52 @@ For this analysis, a delivery is considered **“late”** if it arrives **20 mi
 * **Interaction**: Market 5 needs surge flexibility; Market 1 needs structural fixes.
 
 ---
+---
 
-##  Business Recommendations
+##  A/B Test Results
 
-### **1. Fix Structural Issues in Market 1**
+To evaluate potential interventions, I ran two simulated A/B tests on Market 1.  
+The goal was to see whether improving **system busyness** (busy_ratio) or **dasher availability** (order_to_dasher_ratio) would lead to better on-time delivery rates.
 
-* **Dasher Allocation**: Recruit more drivers or rebalance coverage, especially in low-performing areas.
-* **Restaurant Partnerships**: Prioritize onboarding restaurants with fast prep times or implement prep-time accuracy checks.
-* **Geographic Bottlenecks**: If Market 1 has longer average delivery distances, consider micro-fulfillment hubs or restricting long-radius deliveries.
+### Test 1: Reduce Busy Ratio
+- **Null Hypothesis (H₀):** No difference in on-time rate between reduced busy_ratio group and control.  
+- **Result:** p-value = 0.407 (> 0.05)  
+- **Interpretation:** Fail to reject H₀ → No statistically significant improvement.
 
-### **2. Improve Peak-Time Performance in Market 5**
+### Test 2: Reduce Order-to-Dasher Ratio
+- **Null Hypothesis (H₀):** No difference in on-time rate between reduced order_to_dasher_ratio group and control.  
+- **Result:** p-value = 0.447 (> 0.05)  
+- **Interpretation:** Fail to reject H₀ → No statistically significant improvement.
 
-* **Surge Strategy**: Strengthen surge pricing and incentives to attract dashers during dinner rush & overnight hours.
-* **Dynamic Allocation**: Deploy predictive models to pre-position dashers before demand spikes.
-* **Queue Management**: Cap order acceptance per dasher during extreme peaks to prevent collapse.
+---
 
-### **3. Cuisine-Level Improvements**
+###  Key Takeaway
+Both simulated interventions **did not yield statistically significant improvements** in on-time delivery rates.  
+This suggests that fixing individual ratios does not improve the on-time delivery rates, and may require **deeper operational or product-level interventions** (e.g., cuisine-specific prep times, batching logic, or regional driver incentives).
 
-* **Slow Cuisines**: For cuisines like Brazilian/Nepalese, set more realistic ETAs or work with restaurants to streamline prep.
-* **Fast Cuisines**: Leverage cuisines like smoothies/breakfast to improve average performance (e.g., promotions, bundling).
-* **Menu Optimization**: Encourage restaurants to flag high-prep items so ETAs adjust accordingly.
+---
 
-### **4. Manage Large Orders Separately**
+## **Business Recommendations**
 
-* **ETA Adjustments**: Clearly display longer ETAs for large orders to align customer expectations.
-* **Dasher Assignment**: Assign experienced dashers or double-dashers for oversized deliveries.
-* **Operational Process**: Explore batch-prep strategies in kitchens to speed up large orders.
+| Observation                         | Suggested Action                                                 | Expected Impact                                 |
+| ----------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------- |
+| Market 1 underperforms              | Conduct operational audits: driver allocation, batching, routing | Improved on-time rates                          |
+| High order-to-dasher ratio          | Increase dasher supply or optimize assignment during peak hours  | Reduce delays and driver overload               |
+| Peak hours (3–8 PM, 2–3 AM)         | Dynamic scheduling & pre-position dashers                        | Smooth delivery during high-demand periods      |
+| Slow cuisines (Brazilian, Nepalese) | Work with restaurants on prep accuracy & routing prioritization  | Faster delivery for challenging orders          |
+| Large orders delayed                | Implement batching strategies or allocate additional resources   | Reduce lateness for high-item orders            |
+| Single-variable interventions fail  | Combine operational changes (extra dashers + improved batching)  | Greater improvement than isolated interventions |
+| Customer experience risk            | Communicate realistic ETAs and proactive delay notifications     | Higher satisfaction & retention                 |
 
-### **5. Monitor Order-to-Dasher Ratio as a Leading KPI**
+---
 
-* **Live Dashboards**: Track this ratio in real-time to trigger interventions.
-* **Threshold Alerts**: Set thresholds where auto-incentives (bonus pay) activate to attract more dashers.
-* **Market Prioritization**: Focus staffing efforts on markets with consistently high ratios.
 
 ---
 
 
 ## **Visualizations / Dashboard**
 
-*(Include these as images or link to Tableau dashboard)*
+Tableau Dashboard: https://public.tableau.com/views/DeliveryInsights_17554220126250/DeliveryInsights?:language=en-US&:sid=&:redirect=auth&showOnboarding=true&:display_count=n&:origin=viz_share_link 
 
 * Histogram of delivery durations with on-time thresholds (15, 20, 30 mins)
   
