@@ -50,75 +50,102 @@ Key questions addressed:
 
 ## **Approach / Methodology**
 
-1. **Exploratory Data Analysis (EDA)**
+1. Data Prep – Engineered is_on_time KPI, calculated delays, and binned lateness.
 
-   * Analyzed on-time delivery rates by market, cuisine, order size, and hour of day.
-   * Identified **problematic hours and patterns** visually.
+2. EDA – Compared markets with distributions, segmentations, and key KPIs.
 
-2. **Statistical Testing**
+3. KPI Tree – Broke down on-time performance by region, cuisine, and busyness.
 
-   * **Chi-square tests** for comparing on-time rates across markets and cuisines.
-   * **Paired t-tests** to control for cuisine when comparing markets.
-   * **Logistic regression** to assess the impact of market, busy ratio, and order-to-dasher ratio on lateness.
+4. Stat Tests – Ran hypothesis tests and logistic regression to quantify drivers.
 
-3. **Root Cause Analysis**
+5. Visualization – Built an interactive Tableau dashboard.
 
-   * Focused on **worst-performing market (Market 1)** to identify structural inefficiencies.
-   * Simulated **A/B tests** to evaluate the potential impact of interventions.
+6. Simulated A/B Test – Modeled interventions (e.g., more dashers, batching changes) using historical data to estimate impact on on-time rate.
+
+7. Recommendations – Proposed operational and product fixes for Market 1.
+
+---
+#  Key Performance Indicator (KPI)
+
+**Primary KPI: On-Time Delivery Rate (`is_on_time`)**
+Percentage of orders delivered on or before the promised time.
+
+* Directly impacts **customer satisfaction & retention**
+* Reflects **operational efficiency**
+* Allows **market-to-market performance comparison**
+
+**Overall on-time delivery rate:** **21.68%**
+
+For this analysis, a delivery is considered **“late”** if it arrives **20 minutes or more** past the promised time (reflecting 2015 customer expectations & operational variability).
 
 ---
 
-## **Key Findings**
+## Supporting KPIs
 
-* **Overall On-Time Rate:** 21.68% (reflecting early-stage delivery systems).
-
-**Market Performance:**
-
-| Market           | On-Time Rate |
-| ---------------- | ------------ |
-| Best (Market 5)  | 24.42%       |
-| Worst (Market 1) | 18.74%       |
-
-**Cuisine Impact:**
-
-* Slowest: Brazilian & Nepalese
-* Fastest: Smoothies & Breakfast items
-
-**Time-of-Day Impact:**
-
-* Worst: 2–3 AM (7.54–12.17%), 3–8 PM (20.86–25.69%)
-* Best: Early morning & late evening (>37%)
-
-**Order Size Effect:**
-
-* Very large orders: 9.39% on-time
-* Very small orders: 26.55% on-time
-
-**Operational KPIs:**
-
-* High **order-to-dasher ratios** increase delays (OR \~4.3 for Market 1).
-* Busy dashers worsen delays, especially in Market 1.
-* Single-variable interventions (reducing busy ratio or order-to-dasher ratio by 30%) **do not significantly improve on-time rates** (p > 0.4).
-
-**Structural Issues:**
-
-* Market 1 shows high lateness even outside peak hours, indicating **deep operational inefficiencies**.
+* **Market Performance**: Market 5 (24.42%) vs Market 1 (18.74%). Market 1 lags by \~5.7 percentage points.
+* **Cuisine Type**: Brazilian & Nepalese → lowest on-time rates; smoothies & breakfast → highest.
+* **Hour of Day**: Lowest rates at 2–3 AM; dinner rush (3–8 PM) also struggles.
+* **Busy Ratio & Order-to-Dasher Ratio**: High ratios drastically reduce on-time performance (as low as \~6% on time).
+* **Order Size**: Large orders significantly more likely to be late.
+* **Order Volume**: Market 1 sees sharper peaks than Market 5, stressing driver supply.
 
 ---
 
-## **Business Recommendations**
+## Statistical Tests
 
-| Observation                         | Suggested Action                                                 | Expected Impact                                 |
-| ----------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------- |
-| Market 1 underperforms              | Conduct operational audits: driver allocation, batching, routing | Improved on-time rates                          |
-| High order-to-dasher ratio          | Increase dasher supply or optimize assignment during peak hours  | Reduce delays and driver overload               |
-| Peak hours (3–8 PM, 2–3 AM)         | Dynamic scheduling & pre-position dashers                        | Smooth delivery during high-demand periods      |
-| Slow cuisines (Brazilian, Nepalese) | Work with restaurants on prep accuracy & routing prioritization  | Faster delivery for challenging orders          |
-| Large orders delayed                | Implement batching strategies or allocate additional resources   | Reduce lateness for high-item orders            |
-| Single-variable interventions fail  | Combine operational changes (extra dashers + improved batching)  | Greater improvement than isolated interventions |
-| Customer experience risk            | Communicate realistic ETAs and proactive delay notifications     | Higher satisfaction & retention                 |
+* Market 1 has **significantly lower on-time rates** than Market 5 (p < 0.001).
+* Market 1 has **more problematic cuisines** (p < 0.05).
+* Within the same cuisines, Market 1 still underperforms (p < 0.05).
+* Larger orders are **significantly correlated** with lateness in both markets.
+* Volume alone cannot explain Market 1’s underperformance (p > 0.05).
 
 ---
+
+## Logistic Regression Insights
+
+* **Baseline gap**: Market 1 starts structurally worse (OR ≈ 0.50 at zero busyness).
+* **Busyness effect**:
+
+  * Market 5 → OR ≈ 0.13 (fragile during peaks).
+  * Market 1 → OR ≈ 0.24 (weak overall, less sensitive to spikes).
+* **Interaction**: Market 5 needs surge flexibility; Market 1 needs structural fixes.
+
+---
+
+##  Business Recommendations
+
+### **1. Fix Structural Issues in Market 1**
+
+* **Dasher Allocation**: Recruit more drivers or rebalance coverage, especially in low-performing areas.
+* **Restaurant Partnerships**: Prioritize onboarding restaurants with fast prep times or implement prep-time accuracy checks.
+* **Geographic Bottlenecks**: If Market 1 has longer average delivery distances, consider micro-fulfillment hubs or restricting long-radius deliveries.
+
+### **2. Improve Peak-Time Performance in Market 5**
+
+* **Surge Strategy**: Strengthen surge pricing and incentives to attract dashers during dinner rush & overnight hours.
+* **Dynamic Allocation**: Deploy predictive models to pre-position dashers before demand spikes.
+* **Queue Management**: Cap order acceptance per dasher during extreme peaks to prevent collapse.
+
+### **3. Cuisine-Level Improvements**
+
+* **Slow Cuisines**: For cuisines like Brazilian/Nepalese, set more realistic ETAs or work with restaurants to streamline prep.
+* **Fast Cuisines**: Leverage cuisines like smoothies/breakfast to improve average performance (e.g., promotions, bundling).
+* **Menu Optimization**: Encourage restaurants to flag high-prep items so ETAs adjust accordingly.
+
+### **4. Manage Large Orders Separately**
+
+* **ETA Adjustments**: Clearly display longer ETAs for large orders to align customer expectations.
+* **Dasher Assignment**: Assign experienced dashers or double-dashers for oversized deliveries.
+* **Operational Process**: Explore batch-prep strategies in kitchens to speed up large orders.
+
+### **5. Monitor Order-to-Dasher Ratio as a Leading KPI**
+
+* **Live Dashboards**: Track this ratio in real-time to trigger interventions.
+* **Threshold Alerts**: Set thresholds where auto-incentives (bonus pay) activate to attract more dashers.
+* **Market Prioritization**: Focus staffing efforts on markets with consistently high ratios.
+
+---
+
 
 ## **Visualizations / Dashboard**
 
@@ -130,7 +157,7 @@ Key questions addressed:
 
 * “Market-Level On-Time Delivery Performance”
   
-![Image 2](Graphs/output1.png)
+![Image 2](Graphs/output2.png)
 
 * On-Time Delivery Performance by Cuisine Type
   
